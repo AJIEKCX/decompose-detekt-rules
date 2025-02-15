@@ -1,0 +1,16 @@
+[versions]
+kotlin = "2.0.21"
+detekt = "1.23.7"
+kotest = "5.9.1"
+jupiter = "5.11.4"
+jreleaser = "1.16.0"
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+jreleaser = { id = "org.jreleaser", version.ref = "jreleaser" }
+
+[libraries]
+detekt-api = { module = "io.gitlab.arturbosch.detekt:detekt-api", version.ref = "detekt" }
+detekt-test = { module = "io.gitlab.arturbosch.detekt:detekt-test", version.ref = "detekt" }
+kotest = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "jupiter" }

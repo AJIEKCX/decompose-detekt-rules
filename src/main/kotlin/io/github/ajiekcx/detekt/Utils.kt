@@ -1,4 +1,4 @@
-package org.example.detekt
+package io.github.ajiekcx.detekt
 
 import org.jetbrains.kotlin.psi.KtCallExpression
 import org.jetbrains.kotlin.psi.KtClass

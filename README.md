@@ -1,32 +1,48 @@
-# detekt custom rule template
+# Decompose Detekt Rules
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.ajiekcx.detekt/decompose-detekt-rules?label=Maven%20Central)](https://central.sonatype.com/namespace/io.github.ajiekcx.detekt)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
-This repository is a template. You can use it to generate your own repository to write and share your custom rules.
+[Decompose](https://github.com/arkivanov/Decompose) is a Kotlin Multiplatform library for breaking down your code into tree-structured lifecycle-aware business logic components (aka BLoC), with routing functionality and pluggable UI.
+The Decompose Detekt Rules are a set of custom detekt rules that help you avoid critical mistakes when working with Decompose.
 
-## How to use it
+## Quick start
 
-1. Create a new repository using this one as a template. [Click here][create_template]
-2. Edit MyRule to fit your use case
-3. Share your rule! You can upload your rule to [Maven Central][maven_central] if you want. If you don't want to do all
-   the steps that Maven Central requires you can just share your rule using [jitpack][jitpack].
-4. Extra: you can remove all this README and explain what your rule does and how to configure it.
+Specify the dependency on this set of rules using `detektPlugins`:
 
-## Documentation
+```kotlin
+detektPlugins("io.github.ajiekcx.detekt:decompose-detekt-rules:0.1.0")
+```
 
-You can find the documentation about how to write [custom rules here][custom_rule_documentation].
+## Rules
 
-## Note
+### DecomposeComponentContextRule
 
-- Remember that, by default, all rules are disabled. To configure your rules edit the file in
-`src/main/resources/config/config.yml`.
-- Once you have your rules ready you can publish them on the [detekt's marketplace][detekt_marketplace] to improve the discoverability. To do so create a PR editing [this file][detekt_marketplace_edit].
+A common mistake is to create a Decompose `ComponentContext` inside a Composable function scope. For example:
+```kotlin
+class MainActivity: ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-[create_template]: https://github.com/detekt/detekt-custom-rule-template/generate
+        setContent {
+            // DON'T DO THIS
+            val context = defaultComponentContext()
+        }
+    }
+}
+```
 
-[maven_central]: https://search.maven.org/
+If recomposition occurs without Activity recreation, you will get the following exception:
+```
+java.lang.IllegalArgumentException: SavedStateProvider with the given key is already registered
+```
 
-[custom_rule_documentation]: https://detekt.github.io/detekt/extensions.html
+Avoid using the `defaultComponentContext` function inside Composable functions.
 
-[jitpack]: https://jitpack.io/
+## Enabling rules
 
-[detekt_marketplace]: https://detekt.dev/marketplace
-[detekt_marketplace_edit]: https://github.com/detekt/detekt/blob/main/website/src/data/marketplace.js
+By default, all rules are enabled, but you can configure them in your `detekt.yml` configuration file:
+```yaml
+DecomposeRuleSet:
+  DecomposeComponentContextRule:
+    active: true
+```
