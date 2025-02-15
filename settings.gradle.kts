@@ -1,4 +1,4 @@
-rootProject.name = "detekt-custom-rule"
+rootProject.name = "decompose-detekt-rules"
 
 dependencyResolutionManagement {
     repositories {
