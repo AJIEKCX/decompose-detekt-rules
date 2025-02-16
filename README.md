@@ -10,7 +10,7 @@ The Decompose Detekt Rules are a set of custom detekt rules that help you avoid 
 Specify the dependency on this set of rules using `detektPlugins`:
 
 ```kotlin
-detektPlugins("io.github.ajiekcx.detekt:decompose-detekt-rules:0.1.0")
+detektPlugins("io.github.ajiekcx.detekt:decompose-detekt-rules:0.2.0")
 ```
 
 ## Rules
