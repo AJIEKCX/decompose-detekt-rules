@@ -56,6 +56,22 @@ internal fun KtClass.isFragment(): Boolean {
 }
 
 /**
+ * Determines if a class has the @Serializable annotation.
+ */
+internal fun KtClass.isSerializable(): Boolean {
+    return annotationEntries.any { it.text.startsWith("@Serializable") }
+}
+
+/**
+ * Checks if a class is a direct subclass of a given class.
+ */
+internal fun KtClass.isSubclassOf(klass: KtClass): Boolean {
+    return superTypeListEntries
+        .mapNotNull { it.typeReference?.text }
+        .any { it == klass.name }
+}
+
+/**
  * Checks if the class has a superclass that ends with a given suffix.
  *
  * This is useful for detecting inheritance from `Activity`, `Fragment`, or any custom base classes.
