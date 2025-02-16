@@ -1,3 +1,6 @@
 DecomposeRuleSet:
   DecomposeComponentContextRule:
     active: true
+  SerializableDiscriminatorRule:
+    active: true
+    classDiscriminator: 'type'

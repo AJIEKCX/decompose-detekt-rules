@@ -38,6 +38,34 @@ java.lang.IllegalArgumentException: SavedStateProvider with the given key is alr
 
 Avoid using the `defaultComponentContext` function inside Composable functions.
 
+### SerializableDiscriminatorRule
+
+Decompose uses the kotlinx.serialization library to serialize component configurations.
+A common mistake is naming a property the same as the class discriminator (default: "type"). For example:
+
+```kotlin
+import kotlinx.serialization.Serializable
+
+@Serializable
+sealed class ScreenConfig {
+    @Serializable
+    data object Input : ScreenConfig()
+
+    @Serializable
+    data class Details(
+        val message: String,
+        val type: String // DON'T DO THIS
+    ) : ScreenConfig()
+}
+```
+
+If Decompose attempts to serialize this component configuration, you will encounter the following exception:
+```
+java.lang.IllegalStateException: Sealed class 'ScreenConfig.Details' cannot be serialized as base class 'ScreenConfig' because it has property name that conflicts with JSON class discriminator 'type'.
+```
+
+Do not name properties in polymorphic serializable classes as a class discriminator.
+
 ## Enabling rules
 
 By default, all rules are enabled, but you can configure them in your `detekt.yml` configuration file:
@@ -45,4 +73,7 @@ By default, all rules are enabled, but you can configure them in your `detekt.ym
 DecomposeRuleSet:
   DecomposeComponentContextRule:
     active: true
+  SerializableDiscriminatorRule:
+    active: true
+    classDiscriminator: 'type' # optional
 ```

@@ -11,7 +11,8 @@ class DecomposeRuleSetProvider : RuleSetProvider {
         return RuleSet(
             ruleSetId,
             listOf(
-                DecomposeComponentContextRule(config)
+                DecomposeComponentContextRule(config),
+                SerializableDiscriminatorRule(config)
             ),
         )
     }
