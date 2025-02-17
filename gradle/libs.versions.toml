@@ -1,5 +1,5 @@
 [versions]
-kotlin = "2.0.21"
+kotlin = "2.1.10"
 detekt = "1.23.7"
 kotest = "5.9.1"
 jupiter = "5.11.4"
