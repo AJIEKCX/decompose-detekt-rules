@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.0.21"
-detekt = "1.23.7"
+detekt = "1.23.8"
 kotest = "5.9.1"
 jupiter = "5.11.4"
 jreleaser = "1.16.0"
